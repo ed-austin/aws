@@ -1,0 +1,12 @@
+1!install aws cli!sudo apt install awscli!
+5!install tree!sudo apt-get install tree!
+6!create KOPS iam!aws iam create-group --group-name kops!
+7!run aws configure!aws configure!
+8!run aws list-users!aws list-users!
+11!describe aws avail zones (use us-east1)!aws ec2 describe-availability-zones --region us-east-1
+12!create the cluster!kops create cluster --zones=us-east-a ${NAME}
+13!update the cluster config file!kops update cluster ${NAME} --yess
+14!list the created nodes!kubectl get nodes
+15!validate cluster!kops validate cluster --wait 10m
+16!look at all system components!kubectl -n kube-system get pods
+17!Delete the cluster (for safety, this command is commented-out)!#kops delete cluster --name ${NAME} --yes
