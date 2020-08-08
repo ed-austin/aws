@@ -11,6 +11,7 @@ chmod +x kubectx kubens;
 sudo mv kubens kubectx /usr/local/bin"
 5!install tree!sudo apt-get install tree
 6!install jq (see stendolan.github - this is for ubuntu)!sudo apt-get install jq
+7!install helm!curl -sSL https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3
 11!create group and set permissions for docker, then logout & log back in!"sudo groupadd docker;
 sudo usermod -aG docker ubuntu"
 21!create KOPS iam!"aws iam create-group --group-name kops;
