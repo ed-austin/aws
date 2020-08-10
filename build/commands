@@ -27,12 +27,12 @@ aws iam create-access-key --user-name kops"
 23!run aws list-users!aws list-users
 24!export the aws access key parms!"export AWS_ACCESS_KEY_ID=$(aws configure get aws_access_key_id);
 export AWS_SECRET_ACCESS_KEY=$(aws configure get aws_secret_access_key);"
-25!prepare local environment (update as needed)!"export NAME=myfirstcluster.k8s.local;
+25!prepare local environment (update as needed)!"export NAME=mycluster.k8s.local;
 export KOPS_STATE_STORE=s3://epsj/cluster"
 26!describe aws avail zones (use us-east1)!aws ec2 describe-availability-zones --region us-east-1
-27!create the cluster!kops create cluster --zones=us-east-a ${NAME}
+27!create the cluster!kops create cluster --zones=us-east-1a ${NAME}
 28!update the cluster config file!kops update cluster ${NAME} --yes
 29!list the created nodes!kubectl get nodes
 30!validate cluster!kops validate cluster --wait 10m
 31!look at all system components!kubectl -n kube-system get pods
-32!Delete the cluster (for safety, this command is commented-out)!kops delete cluster --name ${NAME} --yes
+32!Delete the cluster!kops delete cluster --name ${NAME} --yes
