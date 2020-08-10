@@ -9,7 +9,7 @@ create:
 
 create_tables:
 	@echo "Create tables..."
-	cd build &&f_run_sql.py cmd.db cr.links.ddl
+	cd build && f_run_sql.py cmd.db cr.links.ddl
 	cd build && f_run_sql.py cmd.db cr.commands.ddl
 
 load_tables:
