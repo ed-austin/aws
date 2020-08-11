@@ -55,3 +55,30 @@ spec:
   - port: 80
     targetPort: 8080
 "
+4!ingress controller!"apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: kubia
+spec:
+  rules:
+  host: kubia.example.com
+  http:
+    paths:
+    - path: /
+      backend:
+        serviceName: kubia-nodeport
+        servicePort: 80
+"
+5!nodeport!"apiVersion: v1
+kind: Service
+metadata:
+  name: kubia-nodeport
+spec:
+  type: NodePort
+  ports:
+  - port: 80
+    targetPort: 8080
+    nodePort: 30123
+  selector:
+    app: kubia
+"
