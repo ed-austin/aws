@@ -42,8 +42,8 @@ spec:
       containers:
       - image: luksa/kubia:v1
         name: nodejs
----
-apiVersion: v1
+"
+4!service!"apiVersion: v1
 kind: Service
 metadata:
   name: kubia
@@ -55,7 +55,7 @@ spec:
   - port: 80
     targetPort: 8080
 "
-4!ingress controller!"apiVersion: extensions/v1beta1
+5!ingress controller!"apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
   name: kubia
@@ -69,7 +69,7 @@ spec:
         serviceName: kubia-nodeport
         servicePort: 80
 "
-5!nodeport!"apiVersion: v1
+6!nodeport!"apiVersion: v1
 kind: Service
 metadata:
   name: kubia-nodeport
@@ -81,4 +81,50 @@ spec:
     nodePort: 30123
   selector:
     app: kubia
+"
+7!cronjob!"apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: hello
+spec:
+  schedule: ""*/1 * * * *""
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+          - name: hello
+            image: busybox
+            args:
+            - /bin/sh
+            - -c
+            - date; echo Hello from the Kubernetes cluster
+          restartPolicy: OnFailure
+"
+8!deployment w/readiness probe!"apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  name: kubia
+spec:
+  replicas: 3
+  minReadySeconds: 10
+  strategy:
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+    type: RollingUpdate
+  template:
+    metadata:
+      name: kubia
+      labels: 
+        app: kubia
+    spec:
+      containers:
+      - image: luksa/kubia:v3
+      name: nodejs
+      readinessProbe:
+        periodSeconds: 1
+        httpGet:
+          path: /
+          port: 8080
 "
