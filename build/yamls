@@ -570,3 +570,116 @@ spec:
     requests:
       storage: 20Gi
 "
+17!fluentd!"apiVersion: apps/v1
+# source:
+# https://kubernetes.io/docs/concepts/workloads/controllers/daemonset/
+#
+kind: DaemonSet
+metadata:
+  name: fluentd-elasticsearch
+  namespace: kube-system
+  labels:
+    k8s-app: fluentd-logging
+spec:
+  selector:
+    matchLabels:
+      name: fluentd-elasticsearch
+  template:
+    metadata:
+      labels:
+        name: fluentd-elasticsearch
+    spec:
+      tolerations:
+      # this toleration is to have the daemonset runnable on master nodes
+      # remove it if your masters can't run pods
+      - key: node-role.kubernetes.io/master
+        effect: NoSchedule
+      containers:
+      - name: fluentd-elasticsearch
+        image: quay.io/fluentd_elasticsearch/fluentd:v2.5.2
+        resources:
+          limits:
+            memory: 200Mi
+          requests:
+            cpu: 100m
+            memory: 200Mi
+        volumeMounts:
+        - name: varlog
+          mountPath: /var/log
+        - name: varlibdockercontainers
+          mountPath: /var/lib/docker/containers
+          readOnly: true
+      terminationGracePeriodSeconds: 30
+      volumes:
+      - name: varlog
+        hostPath:
+          path: /var/log
+      - name: varlibdockercontainers
+        hostPath:
+          path: /var/lib/docker/containers
+"
+18!node selector based on disktype!"apiVersion: v1
+kind: Pod
+metadata:
+# replace radom-generator with your name
+  name: random-generator
+spec:
+  containers:
+# use your image
+  - image: k8spatterns/random-generator:1.0
+    name: random-generator
+  nodeSelector:
+    disktype: ssd
+"
+19!pod with node affinity!"apiVersion: v1
+kind: Pod
+metadata:
+# replace random-generator with your name
+  name: random-generator
+spec:
+  affinity:
+    nodeAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        nodeSelectorTerms:
+        - matchExpressions:
+          - key: numberCores
+            operator: Gt
+            values: [ ""3"" ]
+      preferredDUringSchedulingIgnoredDUringExecution:
+      - weight: 1
+        preference:
+          matchFields:
+          - key: metadata.name
+            operator: NotIn
+            values: [ ""master"" ]
+  containers:
+# use your image
+  - image: k8spatterns/random-generator:1.0
+    name: random-generator
+"
+20!pod with pod affinity!"apiVersion: v1
+kind: Pod
+metadata:
+# replace random-generator with your name
+  name: random-generator
+spec:
+  affinity:
+    podAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+      - labelSelector:
+        matchLabels:
+          confidentia: high
+        topologyKey: security-zone
+    podAffinity:
+      preferredDUringSchedulingIgnoredDuringExecution:
+      - weight: 100
+        podAffinityTerm:
+          labelSelector:
+            matchLabels:
+              confidential: none
+          topologyKey: kubernetes.io/hostname
+  containers:
+# use your image
+  - image: k8spatterns/random-generator:1.0
+    name: random-generator
+"

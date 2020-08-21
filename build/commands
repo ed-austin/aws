@@ -2,7 +2,7 @@
 2!install kubectl!"curl -Lo kubectl https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl
 chmod +x ./kubectl
 sudo mv ./kubectl /usr/local/bin/kubectl"
-3!install KOPS!"curl -LO https://github.com/kubernetes/kops/releases/download/$(curl -s https://api.github.com/repos/kubernetes/kops/releases/latest | grep tag_name | cut -d '\"' -f 4)/kops-linux-amd64;
+3!install KOPS!"curl -LO https://github.com/kubernetes/kops/releases/download/$(curl -s https://api.github.com/repos/kubernetes/kops/releases/latest | grep tag_name | cut -d '\""' -f 4)/kops-linux-amd64;
 chmod +x kops-linux-amd64;
 sudo mv kops-linux-amd64 /usr/local/bin/kops"
 4!install kubectx and kubens!"wget https://raw.githubusercontent.com/ahmetb/kubectx/master/kubectx;
@@ -30,8 +30,8 @@ export AWS_SECRET_ACCESS_KEY=$(aws configure get aws_secret_access_key);"
 25!prepare local environment (update as needed)!"export NAME=mycluster.k8s.local KOPS_STATE_STORE=s3://epsj/cluster"
 26!describe aws avail zones (use us-east1)!aws ec2 describe-availability-zones --region us-east-1
 27!create the cluster!kops create cluster --zones=us-east-1a ${NAME}
-28!update the cluster config file!kops update cluster ${NAME} --yes
+28!update the cluster config file!echo update cluster ${NAME} --yes | xargs kops
 29!list the created nodes!kubectl get nodes
 30!validate cluster!kops validate cluster --wait 10m
 31!look at all system components!kubectl -n kube-system get pods
-32!Delete the cluster!kops delete cluster --name ${NAME} --yes
+32!Delete the cluster!echo delete cluster --name ${NAME} --yes | xargs kops
