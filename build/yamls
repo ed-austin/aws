@@ -683,3 +683,28 @@ spec:
   - image: k8spatterns/random-generator:1.0
     name: random-generator
 "
+21!tainted node!"apiVersion: v1
+kind: Node
+metadata:
+  name: master
+spec:
+  taints:
+  - effect: NoSchedule
+    key: node-role.kubernetes.io/master
+"
+22!pod tolerating node taints!"apiVersion: v1
+kind: Pod
+metadata:
+# replace reandom-generator with your name
+  name: random-generator
+spec:
+  containers:
+  - image: k8spatterns/random-generator:1.0
+    name: random-generator
+  tolerations:
+  - key: node-role.kubernetes.io/master
+    operator: Exists
+# see 21
+# tolerate only when the taint specifies a NoSchedule effect
+    effect: NoSchedule
+"
