@@ -15,8 +15,8 @@ sudo mv kubens kubectx /usr/local/bin"
 11!create group and set permissions for docker, then logout & log back in!"sudo groupadd docker;
 sudo usermod -aG docker ubuntu"
 12!install terraform (ubuntu): add GPG key!curl -fsSL https://apt.releases.hashicorp.com/gpg | sudo apt-key add -
-12!install terraform (ubuntu): add Hashicorp linux repo!sudo apt-add-repository "deb [arch=amd64] https://apt.releases.hashicorp.com $(lsb_release -cs) main"
-13!install terraform (ubuntu): update and install!sudo apt-get update && sudo apt-get install terraform
+13!install terraform (ubuntu): add Hashicorp linux repo!sudo apt-add-repository "deb [arch=amd64] https://apt.releases.hashicorp.com $(lsb_release -cs) main"
+14!install terraform (ubuntu): update and install!sudo apt-get update && sudo apt-get install terraform
 21!create KOPS iam!"aws iam create-group --group-name kops;
 aws iam attach-group-policy --policy-arn arn:aws:iam::aws:policy/AmazonEC2FullAccess --group-name kops;
 aws iam attach-group-policy --policy-arn arn:aws:iam::aws:policy/AmazonRoute53FullAccess --group-name kops;
