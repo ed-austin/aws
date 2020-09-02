@@ -11,6 +11,7 @@ create_tables:
 	@echo "Create tables..."
 	cd build && f_run_sql.py cmd.db cr.yamls.ddl
 	cd build && f_run_sql.py cmd.db cr.commands.ddl
+	cd build && f_run_sql.py cmd.db cr.repos.ddl
 
 load_tables:
 	@echo "Loading data..."

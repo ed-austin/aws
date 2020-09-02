@@ -170,6 +170,7 @@ spec:
     app: nginx
 "
 12!StatefulSet!"apiVersion: apps/v1
+# https://github.com/dennyzhang/kubernetes-yaml-templates/blob/master/statefulset/statefulset-nginx.yaml
 kind: StatefulSet
 metadata:
   name: web
@@ -707,4 +708,88 @@ spec:
 # see 21
 # tolerate only when the taint specifies a NoSchedule effect
     effect: NoSchedule
+"
+22!define limit range, apply to a namespace!"apiVersion: v1
+kind: LimitRange
+metadata:
+  name: mem-limit-range
+spec:
+  limits:
+  - default:
+      memory: 512Mi
+    defaultRequest:
+      memory: 256Mi
+    type: Container
+"
+23!define limit range, apply to namespace!"apiVersion: v1
+kind: LimitRange
+metadata:
+  name: cpu-limit-range
+spec:
+  limits:
+  - default:
+      cpu: 1
+    defaultRequest:
+      cpu: 0.5
+    type: Container
+"
+24!job example (calulate pi using perl)!"apiVersion: batch/v1
+kind: Job
+metadata:
+  name: pi
+spec:
+  template:
+    spec:
+      containers:
+      - name: pi
+        image: perl
+        command: [""perl"",  ""-Mbignum=bpi"", ""-wle"", ""print bpi(2000)""]
+      restartPolicy: Never
+  backoffLimit: 4
+"
+25!sidecar example using forture pod!"apiVersion: v1
+kind: Pod
+metadata:
+  name:  fortune
+spec:
+  containers:
+  - image: luksa/fortune
+    name: html-generator
+    volumeMounts:
+    - name: html
+      mountPath: /var/htdocs
+  - image: nginx:alpine
+    name: web-server
+    volumeMounts:
+    - name: html
+      mountPath: /usr/share/nginx/html
+      readOnly: true
+    ports: 
+    - containerPort: 80
+      protocol: TCP
+  volumes:
+  - name: html
+    emptyDir: {}
+"
+26!sidecar example using github!"apiVersion: v1
+kind: Pod
+metadata:
+  name: gitrepo-volume-pod
+spec:
+  containers:
+  - image: nginx:alpine
+    name: web-server
+    volumeMounts:
+    - name: html
+      mountPath: /usr/share/nginx/html
+      readOnly: true
+    ports:
+    - containerPort: 80
+      protocol: TCP
+  volumes:
+  - name: html
+    gitRepo:
+      repository: https://github.com/ed-austin/aws.git
+      revision: master
+      directory: .
 "
