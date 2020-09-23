@@ -50,4 +50,8 @@ export AWS_SECRET_ACCESS_KEY=$(aws configure get aws_secret_access_key);"
 29!list the created nodes!kubectl get nodes
 30!validate cluster!kops validate cluster --wait 10m
 31!look at all system components!kubectl -n kube-system get pods
-32!Delete the cluster!echo delete cluster --name ${NAME} --yes | xargs kops
+32!delete the cluster!echo delete cluster --name ${NAME} --yes | xargs kops
+51!describe patch set for Ubuntu OS!aws ssm describe-patch-properties --property PRIORITY --operating-system UBUNTU
+52!describe existing patch baselines!aws ssm describe-patch-baselines
+53!create patch baseline (first attempt), but AWS provides default baselines!aws ssm create-patch-baseline --name ""First-baseline""  --operating-system ""UBUNTU""  --tags ""Key=Environment,Value=working"" --approval-rules ""PatchRules=[{PatchFilterGroup={PatchFilters=[{Key=PRIORITY,Values=Required}]}}]"" --description=""Baseline for ubuntu 18.04 image""
+54!send command!aws ssm send-command --document-name ""AWS-RunPatchBaseline"" --document-version ""1"" --targets '[{""Key"":""tag:Environment"",""Values"":[""working""]}]' --parameters '{""Operation"":[""Scan""],""SnapshotId"":[""""],""InstallOverrideList"":[""""],""RebootOption"":[""RebootIfNeeded""]}' --timeout-seconds 600 --max-concurrency ""50"" --max-errors ""0"" --output-s3-bucket-name ""epsj"" --output-s3-key-prefix ""patch"" --region us-east-1

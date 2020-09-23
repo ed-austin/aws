@@ -165,9 +165,42 @@ spec:
   ports:
   - port: 80
     name: web
-  clusterIP: None # this makes it headless
+  clusterIP: None
   selector:
     app: nginx
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: web
+spec:
+  serviceName: ""nginx""
+  replicas: 2
+  selector:
+    matchLabels:
+      app: nginx
+  template:
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      containers:
+      - name: nginx
+        image: k8s.gcr.io/nginx-slim:0.8
+        ports:
+        - containerPort: 80
+          name: web
+        volumeMounts:
+        - name: www
+          mountPath: /usr/share/nginx/html
+  volumeClaimTemplates:
+  - metadata:
+      name: www
+    spec:
+      accessModes: [ ""ReadWriteOnce"" ]
+      resources:
+        requests:
+          storage: 1Gi
 "
 12!StatefulSet!"apiVersion: apps/v1
 # https://github.com/dennyzhang/kubernetes-yaml-templates/blob/master/statefulset/statefulset-nginx.yaml
@@ -430,6 +463,7 @@ spec:
     tier: frontend
 "
 16!wordpress example!"apiVersion: v1
+# This one works
 data:
   password: WU9VUl9QQVNTV09SRA==
 kind: Secret
@@ -792,4 +826,90 @@ spec:
       repository: https://github.com/ed-austin/aws.git
       revision: master
       directory: .
+"
+27!configmap example!"apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: fortune-config
+data:
+  sleep-interval: ""25""
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: fortune-args-from-configmap
+spec:
+  containers:
+  - image: luksa/fortune:args
+    env:
+    - name: INTERVAL # name in env
+      valueFrom: 
+        configMapKeyRef:
+          name: fortune-config
+          key: sleep-interval
+    args: [""$(INTERVAL)""]
+    name: html-generator
+    volumeMounts:
+    - name: html
+      mountPath: /var/htdocs
+  - image: nginx:alpine
+    name: web-server
+    volumeMounts:
+    - name: html
+      mountPath: /usr/share/nginx/html
+      readOnly: true
+    ports:
+    - containerPort: 80
+      protocol: TCP
+  volumes:
+  - name: html
+    emptyDir: {}
+"
+28!yaml for a cluster IP, connect using kubectl proxy --port=8080!"apiVersion: v1
+kind: Service
+metadata:  
+  name: my-internal-service
+spec:
+  selector:    
+    app: my-app
+  type: ClusterIP
+  ports:  
+  - name: http
+    port: 80
+    targetPort: 80
+    protocol: TCP
+"
+29!storage class example for aws!"kind: StorageClass
+apiVersion: storage.k8s.io/v1
+metadata:
+  name: slow
+provisioner: kubernetes.io/aws-ebs # this calls aws ec2 create-volume command
+parameters:
+  type: io1
+  zone: us-east-1a
+  iopsPerGB: ""10""
+"
+30!persistent volume (PV) w/PVC!"kind: PersistentVolume
+apiVersion: v1
+metadata:
+  name: task-pv
+spec:
+  capacity:
+    storage: 100Gi
+  accessModes:
+    - ReadWriteOnce
+  awsElasticBlockStore:
+    volumeID: vol-867g5kii # this would first be defined by: aws ec2 create-volume --size 100
+    fsType: ext4
+---
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: task-pvc
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 100Gi
 "
