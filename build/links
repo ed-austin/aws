@@ -1,0 +1,5 @@
+1!aws ccp test video!https://www.youtube.com/watch?v=Wp3Es7oVFwo
+2!helm vs tiller!https://dzone.com/articles/terraform-vs-helm-for-kubernetes#:~:text=Both%20allow%20you%20to%20describe,the%20JSON%2FHCL%20file%20format.&text=Both%20allow%20dry%20runs%20of,Terraform%20has%20the%20plan%20subcommand).
+3!ccp video!https://www.youtube.com/watch?v=3hLmDS179YE
+4!set up efk logging stack in kubernetes!https://www.digitalocean.com/community/tutorials/how-to-set-up-an-elasticsearch-fluentd-and-kibana-efk-logging-stack-on-kubernetes
+5!good explanation on PVC!https://portworx.com/basic-guide-kubernetes-storage/

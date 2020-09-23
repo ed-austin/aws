@@ -10,3 +10,12 @@
 10!kubernetes examples!https://github.com/kubernetes/examples
 11!kubernetes Udemy study guide!https://github.com/Sher-Chowdhury/Kubernetes-Study-Guide
 12!eksctl weaveworks!https://github.com/weaveworks/eksctl
+13!author luksa!https://github.com/luksa
+14!good reference site!https://unofficial-kubernetes.readthedocs.io/en/latest/
+15!good reference site with examples!https://jamesdefabia.github.io/docs/user-guide/kubectl-cheatsheet/
+16!good examples with kubernetes and django!https://github.com/gitumarkk
+17!django on kubernetes!https://github.com/gitumarkk/kubernetes_django
+18!kubernetes!https://github.com/kubernetes-sigs/aws-ebs-csi-driver
+19!elastic repo!https://github.com/elastic
+20!kubernetes alb ingress controller!https://github.com/kubernetes-sigs/aws-alb-ingress-controller/blob/master/docs/examples/alb-ingress-controller.yaml
+21!kubernetes sigs!https://github.com/kubernetes-sigs
