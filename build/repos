@@ -19,3 +19,4 @@
 19!elastic repo!https://github.com/elastic
 20!kubernetes alb ingress controller!https://github.com/kubernetes-sigs/aws-alb-ingress-controller/blob/master/docs/examples/alb-ingress-controller.yaml
 21!kubernetes sigs!https://github.com/kubernetes-sigs
+22!fix for problems in mounting AWS efs file system on ec2!https://github.com/aws/efs-utils
