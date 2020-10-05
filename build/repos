@@ -20,3 +20,11 @@
 20!kubernetes alb ingress controller!https://github.com/kubernetes-sigs/aws-alb-ingress-controller/blob/master/docs/examples/alb-ingress-controller.yaml
 21!kubernetes sigs!https://github.com/kubernetes-sigs
 22!fix for problems in mounting AWS efs file system on ec2!https://github.com/aws/efs-utils
+23!awslabs - misc aws templates, etc!https://github.com/awslabs
+24!misc kubernetes, .dot files, etc!https://github.com/camilb
+25!examples from the book!https://github.com/awsinaction
+26!repo from the book!https://github.com/AWSinAction
+27!interview questions on DevOps!https://github.com/bregman-arie/devops-exercises
+28!Hashicorp/Terraform!https://github.com/hashicorp/terraform/tree/master/examples
+29!gui wrapper around sqlite!https://github.com/coleifer/sqlite-web
+30!terraform examples!https://github.com/terraform-providers/terraform-provider-aws
