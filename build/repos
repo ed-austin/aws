@@ -28,3 +28,5 @@
 28!Hashicorp/Terraform!https://github.com/hashicorp/terraform/tree/master/examples
 29!gui wrapper around sqlite!https://github.com/coleifer/sqlite-web
 30!terraform examples!https://github.com/terraform-providers/terraform-provider-aws
+31!cloudformation templates!https://github.com/widdix/aws-cf-templates
+32!terraform examples!https://github.com/andreivmaksimov
