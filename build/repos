@@ -30,3 +30,8 @@
 30!terraform examples!https://github.com/terraform-providers/terraform-provider-aws
 31!cloudformation templates!https://github.com/widdix/aws-cf-templates
 32!terraform examples!https://github.com/andreivmaksimov
+33!terraform aws modules!https://github.com/terraform-aws-modules
+34!sqlite browser!https://github.com/sqlitebrowser/sqlitebrowser
+35!helm charts!https://github.com/helm/charts
+36!docker tutorials, etc!https://github.com/collabnix/dockerlabs
+37!terraform gist repo!https://gist.github.com/phinze
