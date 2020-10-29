@@ -3,3 +3,12 @@
 3!ccp video!https://www.youtube.com/watch?v=3hLmDS179YE
 4!set up efk logging stack in kubernetes!https://www.digitalocean.com/community/tutorials/how-to-set-up-an-elasticsearch-fluentd-and-kibana-efk-logging-stack-on-kubernetes
 5!good explanation on PVC!https://portworx.com/basic-guide-kubernetes-storage/
+6!on-hands kubernetes & docker examples!https://www.bogotobogo.com/DevOps/Docker/Docker-Kubernetes-ALB-Ingress-Controller-with-EKS.php
+7!aws well-architeched labs!https://wellarchitectedlabs.com/
+8!youtube on creating kubernetes dashboard!https://www.youtube.com/watch?v=xe9twgEs5O8
+9!good overall review!https://www.youtube.com/watch?v=Mi3Lx7yk3Hg
+10!interview questions!https://www.youtube.com/watch?v=r0Tl9I5dvZQ
+11!nodeport video!https://www.youtube.com/watch?v=eth7osiCryc
+12!a video on ClusterIP service!https://www.youtube.com/watch?v=dVDElh_Kd48
+13!Terraform aws provider scripts!https://registry.terraform.io/providers/hashicorp/aws/latest/docs
+14!AWS CLI reference!https://awscli.amazonaws.com/v2/documentation/api/latest/index.html
