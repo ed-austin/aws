@@ -1,5 +1,5 @@
 create table commands (
-PK        char,
+PK        int,
 desc      varchar(35),
 statement varchar (200)
 )
